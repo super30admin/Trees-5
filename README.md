@@ -48,52 +48,52 @@ Example 1:
 Input: [1,3,null,null,2]
 
 
-   1
+        1
 
-  /
+      /
 
- 3
+    3
 
-  \
+      \
 
-   2
+        2
 
 Output: [3,1,null,null,2]
 
 
-   3
+        3
 
-  /
+      /
 
- 1
+    1
 
-  \
+      \
 
-   2
+        2
 Example 2:
 
 Input: [3,1,4,null,null,2]
 
 
-  3
+          3
 
- / \
+        / \
 
-1   4
+      1   4
 
-   /
+        /
 
-  2
+      2
 
 Output: [2,1,4,null,null,3]
 
 
-  2
+        2
 
- / \
+      / \
 
-1   4
+    1   4
 
-   /
+       /
 
-  3
+     3
