@@ -1,6 +1,10 @@
 import java.util.Stack;
 
-
+//tc o(n)
+//Morrisinorder traversal first check left side or root and locate its right most element ,create temporary link between root and rightmost element.
+//if already established link then check rightside of root.for every check update values of previous and current and at the end swap both values
+//Morris sc o(1) 
+//recursive and iterative sc o(n)
 public class RecoverBST {
 	//class TreeNode
 	public  class TreeNode {
