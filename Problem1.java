@@ -25,3 +25,27 @@ class Solution {
         return root;
     }
 }
+// Constant Time Approach
+//Time : O(n)
+// Space: O(1)
+
+//Approach
+//1 . Have two pointers , start and current.Initially current is equal to start.
+//2 . Now make current's left node next pointer as current's right node. Now if current has a next pointer then change current to current's next pointer.Repeat step 2 till current's next node is null.
+// 3. Now we need to move to next level . So change start to start's left node and change current to start.Repeat step 2 and 3 till all levels are done.
+class Solution {
+    public Node connect(Node root) {
+        Node start = root;
+        Node current = root;
+        while(start!=null){
+            current = start;
+            while(current!=null){
+                if(current.left!=null ) current.left.next = current.right;
+                if(current.right!=null && current.next!=null) current.right.next = current.next.left;
+                current = current.next;
+            }
+            start = start.left;
+        }
+        return root;
+    }
+}
