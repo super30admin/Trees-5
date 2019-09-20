@@ -31,3 +31,20 @@ class Solution:
 				else: # Still there are more elements in that level
 					temp.next = queue[0]
 		return root
+
+	def connect(self, root: 'Node') -> 'Node':
+		# Time Complexity : O(n) where n is the number of nodes in the tree
+		# Space Complexity : Constant space if we don't consider the recursive stack that is used internally during recursion
+        if root == None:
+            return root
+        temp = root
+        while temp != None:
+            cur = temp
+            while cur != None:
+                if cur.left != None:
+                    cur.left.next = cur.right
+                if cur.right != None and cur.next != None:
+                    cur.right.next = cur.next.left
+                cur = cur.next
+            temp = temp.left
+        return root
