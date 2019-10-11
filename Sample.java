@@ -38,3 +38,46 @@ class Solution {
         func(node2.left,node2.right);
     }
 }
+
+// Time Complexity : O(n)
+// Space Complexity : O(n)
+// Your code here along with comments explaining your approach
+// Approach: Traverse BST in inorder fashion. For every node visited, keep track of prev node visited.
+// if prev node's val is greater than node's value, then these 2 nodes would have to bve swapped.
+// if we find more such pairs of nodes, then we've to swap first found prev node and last found curr node.
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    TreeNode n1,n2,prev;
+    public void recoverTree(TreeNode root) {
+        func(root);
+        swap(n1,n2);
+    }
+    private void func(TreeNode node){
+        if(node==null) return;
+        func(node.left);
+        if(prev!=null){
+            if(prev.val>node.val){
+                if(n1==null){
+                    n1 = prev;
+                    n2 = node;
+                }
+                n2 = node;
+            }
+        }
+        prev = node;
+        func(node.right);
+    }
+    private void swap(TreeNode n1, TreeNode n2){
+        int temp = n1.val;
+        n1.val = n2.val;
+        n2.val = temp;
+    }
+}
