@@ -103,7 +103,7 @@ public:
         
     }
 
-    /* Version 2 of the program done using BFS for practice */
+    /* Version 2 of the program done using BFS for practice. This also works for LEETCODE #117*/
     Node* connect_ver2(Node* root) {
         queue<Node*> q;
         int idx, curr_size;
