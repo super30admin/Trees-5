@@ -40,6 +40,11 @@ Note:
  * Space complexity :O(1)
  */
 
+ /* Solution 2: using BFS
+   Time Complexity : O(n)
+ * Space complexity :O(n) extra space for queue 
+ */
+
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -94,6 +99,52 @@ public:
     
     Node* connect(Node* root) {
         connect_recurse(root);
+        return root;
+        
+    }
+
+    /* Version 2 of the program done using BFS for practice */
+    Node* connect_ver2(Node* root) {
+        queue<Node*> q;
+        int idx, curr_size;
+        Node *prev = NULL, *curr = NULL;
+        
+        if (!root) {
+            return NULL;
+        }
+        /* push first element in queue */
+        q.push(root);
+        
+        // COntinue processing unless queue is empty. pop out all elements at each level connect it via next pointer 
+        while (q.size() > 0) {
+            curr_size = q.size();
+            
+            prev = q.front();
+            q.pop();
+            /* add entries to queue for left and right */
+            if (prev->left)
+                q.push(prev->left);
+
+            if (prev->right)
+                q.push(prev->right);
+
+            /* start from the 2nd element in queue as first element is already popped out */  
+            for (idx = 1; idx < curr_size; idx++) { 
+
+                curr = q.front();
+                q.pop();
+
+                if (curr->left)
+                    q.push(curr->left);
+
+                if (curr->right)
+                    q.push(curr->right);
+                /* update prev to the current one */    
+                prev->next = curr;
+                prev = curr;
+            }
+            prev->next = NULL;
+        }
         return root;
         
     }
