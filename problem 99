@@ -1,0 +1,145 @@
+/*
+Challenges:
+this solution only works, if i return the local max as soon as i get it, as there are chances of having more than one local max.
+
+but same does not work for local min, I have to get towards the end of the list to finalize local min.
+
+Something does not seem right here.
+
+TimeComplexity: O(n)
+SpaceComplexity: O(n)
+
+Approach:
+
+inroder the given tree
+I tried finding local min and local max in the sorrted list that we get after inorder
+
+swap local min and local max
+*/
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    ArrayList<Integer> arl = new ArrayList<>();
+    TreeNode parent1=null;
+    TreeNode parent2=null;
+    TreeNode parent=null;
+    public void recoverTree(TreeNode root) {
+        
+        inorder(root);
+        int localmin=0;
+        int localmax=0;
+        System.out.println(arl);
+       localmin=getlocalmin();
+       localmax=getlocalmax();
+        System.out.println(localmax);
+        
+        System.out.println(localmin);
+        findparent(root,localmax);
+        parent1=parent;
+        findparent(root,localmin);
+        parent2=parent;
+        
+        parent1.val=localmin;
+        parent2.val=localmax;
+        
+   //     return root;
+    }
+    
+
+  int getlocalmax()
+  {
+        int localmax=0;   
+      for(int i=0;i<arl.size();i++)
+        {
+            if(i==0&&arl.get(i)>arl.get(i+1))
+            {
+                localmax=arl.get(i);
+                   return localmax; // if I comment this out, solution will not work
+            }
+            
+            
+            if(i>0&&i<arl.size()-1)
+            {
+                if(arl.get(i)>arl.get(i+1)&&arl.get(i)>arl.get(i-1))
+                {
+                    localmax=arl.get(i);
+                       return localmax; // if I comment this out, solution will not work
+                }
+            }
+          
+        
+        }
+       return localmax;
+      
+  }
+    int getlocalmin()
+    {
+        int localmin=0;
+        for(int i=0;i<arl.size();i++)
+        {
+            
+            if(i==arl.size()-1&&arl.get(i)<arl.get(i-1))
+            {
+                localmin=arl.get(i);
+               //   return localmin; // if I un comment this, solution will not work
+            }
+            
+            if(i>0&&i<arl.size()-1)
+            { 
+                if(arl.get(i)<arl.get(i+1)&&arl.get(i)<arl.get(i-1))
+                {
+                    localmin=arl.get(i);
+              
+               //   return localmin; // if I un comment this, solution will not work
+                }
+            }
+          
+        }
+    
+       return localmin;
+    }
+  void inorder(TreeNode root)
+    {
+       
+      if(root==null) return;
+     
+      inorder(root.left);
+      arl.add(root.val);
+      inorder(root.right);
+    
+      
+    }
+    
+   void findparent(TreeNode root,int target)
+    {
+        if(root.val==target)
+        {
+            //root.val=target1;
+            parent=root;
+            return;
+        }
+        else
+        {
+        if(root.left!=null)
+        {
+            findparent(root.left,target);
+        }
+        
+        if(root.right!=null)
+        {
+            findparent(root.right,target);
+        }
+        }
+        
+
+        
+    }
+}
