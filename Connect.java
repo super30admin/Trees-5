@@ -1,11 +1,30 @@
 // Time Complexity : O(N)
-// Space Complexity : O(H) using queue, O(1) + recursion stack using recursion.
+// Space Complexity : O(H) using queue, O(1) + recursion stack using recursion, O(1) if we use pointers.
 // Did this code successfully run on Leetcode : Yes.
 // Any problem you faced while coding this : Nope.
 
 
 // Your code here along with comments explaining your approach
 class Connect {
+	
+	public Node connect3(Node root) {
+        if(null == root){return null;}
+        Node level = root;
+        while(null != level){
+            Node current = level;
+            while(null != current){
+                if(null != current.left){
+                    current.left.next = current.right;
+                }
+                if(null != current.right && null != current.next){
+                    current.right.next = current.next.left;
+                }
+                current = current.next;
+            }
+            level = level.left;
+        }
+    return root;
+    }
 	
 	public Node connect2(Node root) {
         if(null == root){return null;}
