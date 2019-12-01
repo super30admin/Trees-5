@@ -37,10 +37,13 @@ class Solution(object):
         x,y=None,None
         for i in range(1,len(inorder)):
             if inorder[i-1]>inorder[i]:
-                x=inorder[i-1]
                 y=inorder[i]
-                break
+                if x is None:
+                    x=inorder[i-1]
+                else:
+                    break
         return (x,y)
+    
     
     def recoverNode(self,node,x,y):
         if node:
