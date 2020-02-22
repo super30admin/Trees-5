@@ -31,10 +31,14 @@ class Solution {
     if(root == null)
         return;
         
-    //iterative
+    //recursive
+    //if root has left
     if(root.left != null){
+        //connect left child with right child
         root.left.next = root.right;
+        //if root->next has some value (prev connection made between left and right)
         if(root.next != null)
+            //connection between roots right child and prev right root's left child
             root.right.next = root.next.left;
     }
     
@@ -51,7 +55,7 @@ class Solution {
 
 /*************************************************************** */
 //Time Complexity : O(n)
-//Space Complexity: O(log(n))
+//Space Complexity: O(2^h) -> where h is the height
 //using Breadth First Search
 
 /*
