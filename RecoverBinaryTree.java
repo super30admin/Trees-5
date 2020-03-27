@@ -1,52 +1,48 @@
-/*
-// Definition for a Node.
-class Node {
-    public int val;
-    public Node left;
-    public Node right;
-    public Node next;
-
-    public Node() {}
-    
-    public Node(int _val) {
-        val = _val;
-    }
-
-    public Node(int _val, Node _left, Node _right, Node _next) {
-        val = _val;
-        left = _left;
-        right = _right;
-        next = _next;
-    }
-};
-*/
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
 
 /*
-Brute force way would be to do level order traversal and while doing level order traversal keep connecting the nodes at the same level. But that would take extra space for storing the nodes in the queue. 
-
-
+Time Complexity: O(N) in the worse case we would be traversing the entire tree
+Space Complexity: O(H) where is the height of the tree.
 */
+
 class Solution {
-    public Node connect(Node root) {
-        Node dummy = new Node(-1);
-        Node ptr = dummy;
-        Node cur = root;
-        while(root != null){
-            if(root.left != null){
-                ptr.next = root.left;
-                ptr = ptr.next;
+    public void recoverTree(TreeNode root) {
+        if(root ==null)
+            return;
+        TreeNode first = null, second =null;
+        TreeNode prev =null, cur = root;
+        Stack<TreeNode> st = new Stack<>();
+        
+        while(!st.isEmpty() || cur != null){
+            //traverse left subtree.
+            while(cur != null){
+                st.push(cur);
+                cur = cur.left;
             }
-            if(root.right != null){
-                ptr.next = root.right;
-                ptr = ptr.next;
-            }
-            root = root.next;
-            if(root == null){
-                ptr = dummy;
-                root = dummy.next;
-                dummy.next = null;
-            }
+            cur = st.pop();
+            // first node where predecessor is greater than current node.
+           if(prev!= null && first == null && prev.val > cur.val)
+              first = prev;
+            // second node where predecessor is greater than current node.
+           if(first!= null && prev.val > cur.val)
+               second = cur;
+           prev = cur;
+           cur = cur.right;
         }
-        return cur;
+        //to recover the tree we just need to swap these two nodes.
+        swap(first, second);
+    }
+    private void swap(TreeNode first, TreeNode second){
+        int temp = first.val;
+        first.val = second.val;
+        second.val = temp;
     }
 }
