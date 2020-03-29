@@ -3,11 +3,6 @@
 # Did code run successfully on leetcode: yes
 # Any problem you faced: No
 
-
-
-
-
-
 class Solution {
     public Node connect(Node root) {
         if(root == null) return root;
