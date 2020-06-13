@@ -7,6 +7,15 @@
     //Explanation:
     if node has both left and right child; set node.left.next = node.right
     if node.next it means that node has sibling,so node.right.next = node.next.left
+
+    failed approach:
+    maintaining a parentNode will not work here; as if we assign parentNode = currentNode,
+    3.next will point 5(right of 2) instead of 3
+
+    another failed approach:
+    maintain size variable
+    if len(queue) == 0 then currentNode.next = None
+    else currentNode.next =queue[0]
 """
 """
 # Definition for a Node.
