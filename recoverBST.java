@@ -1,5 +1,5 @@
 // Time Complexity :O(n) n-number of nodes
-// Space Complexity :O(1)
+// Space Complexity :O(h) stack space
 // Did this code successfully run on Leetcode :yes 
 // https://leetcode.com/problems/recover-binary-search-tree/
 /**
