@@ -1,4 +1,7 @@
-class Solution {
+Executed in leetcode-Yes
+Time && Space Complexity-o(n)
+        
+    class Solution {
         TreeNode prev=null;
         TreeNode first= null; TreeNode last =null;
 
