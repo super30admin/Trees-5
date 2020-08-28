@@ -1,6 +1,6 @@
 # Trees-5
 
-## Problem1 Populating Next Right Pointers in Each Node(https://leetcode.com/problems/populating-next-right-pointers-in-each-node/)
+## Problem 1 Populating Next Right Pointers in Each Node(https://leetcode.com/problems/populating-next-right-pointers-in-each-node/)
 
 You are given a perfect binary tree where all leaves are on the same level, and every parent has two children. The binary tree has the 
 following definition:
@@ -37,7 +37,7 @@ You may only use constant extra space.
 
 Recursive approach is fine, implicit stack space does not count as extra space for this problem.
 
-## Problem2 Recover Binary Search Tree(https://leetcode.com/problems/recover-binary-search-tree/)
+## Problem 2 Recover Binary Search Tree(https://leetcode.com/problems/recover-binary-search-tree/)
 
 Two elements of a binary search tree (BST) are swapped by mistake.
 
