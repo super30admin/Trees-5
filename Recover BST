@@ -4,6 +4,7 @@ Space Complexity : O(N)
 Approach 2 : Inorder Traversal over the tree by keep tracking the breaches using three pointers and a flag
 Time complexity : O(N)
 Space Complexity : O(1)
+When nodes are adjacent , there can be single breach , if they are not there can be more than one breach
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
