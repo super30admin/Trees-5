@@ -1,0 +1,53 @@
+Approach 1 : Brute Force Approach - Perform an inroder traversal and store in an array and then sort will put everyone in ascending order.
+Time Complexity :O(N)
+Space Complexity : O(N)
+Approach 2 : Inorder Traversal over the tree by keep tracking the breaches using three pointers and a flag
+Time complexity : O(N)
+Space Complexity : O(1)
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+        TreeNode prev; TreeNode last;
+        TreeNode first; boolean flag;
+    public void recoverTree(TreeNode root) {
+        // Edge Case
+        if (root==null) return;
+        inorder(root); // This will give me first ,last , prev
+        int temp=last.val;
+        last.val=first.val;
+        first.val=temp;
+                    
+    }
+    public void inorder(TreeNode root){
+        // Base Case
+        if (root==null) return;
+        // Edge Case
+        inorder(root.left);
+        //root=stk.pop()
+        if(prev!=null && prev.val>=root.val){// Breach occurs
+            if(!flag){// first breach
+                flag=true;
+                first=prev;
+                last=root;
+            }
+            else {
+                last=root;
+            }
+        }
+        prev=root; 
+        inorder(root.right);              
+    }
+}
