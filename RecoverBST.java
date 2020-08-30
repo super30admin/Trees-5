@@ -13,6 +13,8 @@
  *     }
  * }
  */
+//TC: O(n), n: nodes in tree
+//SC: O(log(n))
 class Solution {
     public void recoverTree(TreeNode root) {
         Stack<TreeNode> st = new Stack();
@@ -45,5 +47,38 @@ class Solution {
                 last.val = first.val;
                 first.val = temp;
             }
+    }
+}
+
+//TC: O(n), n: nodes in tree
+//SC: O(log(n))
+class Solution {
+    TreeNode first = null; TreeNode last = null;
+    TreeNode prev = null; boolean flag = false;
+    public void recoverTree(TreeNode root) {
+        if(root == null) return;
+        inorder(root);
+        int temp = last.val;
+        last.val = first.val;
+        first.val = temp;
+    }
+    
+    private void inorder(TreeNode root){
+        //base
+        if(root == null) return;
+
+        inorder(root.left);
+        if(prev!=null && prev.val >= root.val){
+            if(!flag){
+                first = prev;
+                last = root;
+                flag = true;
+            }
+            else{
+                last = root;
+            }
+        }
+        prev = root;
+        inorder(root.right);
     }
 }
