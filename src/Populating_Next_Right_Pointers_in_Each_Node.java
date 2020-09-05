@@ -88,3 +88,33 @@ public class Populating_Next_Right_Pointers_in_Each_Node {
 		return root;
 	}
 }
+
+/**********************************Approach 3*******************************************/
+//Time Complexity : O(n), number of nodes
+//Space Complexity : O(1), assuming implicit stack space does not count as extra space for this problem
+//Did this code successfully run on Leetcode : yes
+//Any problem you faced while coding this : no
+
+class Populating_Next_Right_Pointers_in_Each_Node_DFS {
+	public Node connect(Node root) {
+		if(root == null)
+			return null;
+
+		dfs(root, null);
+		return root;
+	}
+
+	private void dfs(Node left, Node right){
+		//base
+		if(left == null)
+			return;
+		//logic
+		left.next = right;
+		dfs(left.left, left.right);
+
+		if(right != null){
+			dfs(left.right, right.left);
+			dfs(right.left, right.right);
+		}
+	}
+}
