@@ -2,8 +2,16 @@
 //runtime: O(n)
 //space: O(max depth)
 //leetcode: yes
-//problems:
+//problems: i was checking stack == null instead of stack.length == 0
 //explanation:
+
+// inorder traverse the tree
+// for each tree node
+//    store the prev node
+//    if prev.val > cur.val
+//      save the cur.val
+//    if you have 2 saved vals break immediately
+// before returning, swap the 2 saved values
 
 ///**
 // * Definition for a binary tree node.
@@ -43,7 +51,7 @@ recoverTree = function(root) {
   prev = null;
   x = null;
   y = null;
-  while (stack !== null || root !== null) {
+  while (stack.length !== 0 || root !== null) {
     while (root !== null) {
       stack.push(root);
       root = root.left;
