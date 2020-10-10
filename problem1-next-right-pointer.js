@@ -41,4 +41,4 @@ connect = function(root) {
   return root;
 };
 
-//# sourceMappingURL=problem2-next-right-pointer.js.map
+//# sourceMappingURL=problem1-next-right-pointer.js.map
