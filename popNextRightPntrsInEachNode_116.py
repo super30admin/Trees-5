@@ -1,7 +1,9 @@
-# // Time Complexity : 
-# // Space Complexity : 
-# // Did this code successfully run on Leetcode : 
-# // Any problem you faced while coding this : 
+#Before class discussion: Level order traversal
+
+# // Time Complexity : O(n)
+# // Space Complexity : O(n)
+# // Did this code successfully run on Leetcode : Yes
+# // Any problem you faced while coding this : No
 
 # // Your code here along with comments explaining your approach: 
 
@@ -40,5 +42,45 @@ class Solution:
                     queue.append(front.left)
                 if front.right is not None:
                     queue.append(front.right)
+            
+        return root
+
+#After class discussion
+
+# // Time Complexity : O(V+E)
+# // Space Complexity : O(1)
+# // Did this code successfully run on Leetcode : Yes
+# // Any problem you faced while coding this : No
+
+# // Your code here along with comments explaining your approach: 
+#Intuition: At the root, we only have to process its children. Rearranging node's pointers should give the required arrangement.
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
+"""
+
+class Solution:
+    def connect(self, root: 'Node') -> 'Node':
+        
+        if root == None:
+            return root
+        
+        curr = root
+        level = root
+        while level.left != None:
+            curr = level
+            while curr != None:
+                curr.left.next = curr.right
+                if curr.next != None:
+                    curr.right.next = curr.next.left
+                curr = curr.next
+                
+            level = level.left
             
         return root
