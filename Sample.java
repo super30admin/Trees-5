@@ -1,6 +1,6 @@
 // Problem 1 - Populating Next Right Pointers in Each Node II
-// Time Complexity:
-// Space Complexity:
+// Time Complexity: O(V + E)
+// Space Complexity: O(n)
 
 // Algorithm
 // 1 - initiliaze queue
@@ -73,4 +73,61 @@ class Solution {
 
     return root;
   }
+}
+
+// Problem 2 - Recover Binary Search Tree
+// Time Complexity: O(V + E)
+// Space Complexity: O(max depth)
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public void recoverTree(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+
+        Stack<TreeNode> stack = new Stack<>();
+        TreeNode prev = null;
+        TreeNode x = null;
+        TreeNode y = null;
+
+        while (!stack.isEmpty() || root != null) {
+            while (root != null) {
+                stack.add(root);
+                root = root.left;
+            }
+
+            TreeNode pop = stack.pop();
+
+            if (prev != null && (prev.val > pop.val)) {
+                x = pop;
+                if (y == null) {
+                    y = prev;
+                } else {
+                    break;
+                }
+            }
+
+            prev = pop;
+            root = pop.right;
+        }
+
+        int temp = x.val;
+        x.val = y.val;
+        y.val = temp;
+    }
 }
