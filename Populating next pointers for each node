@@ -1,0 +1,34 @@
+// Time complexity : O(N)
+// sapce complexity : O(1)
+// Considering N-1th level as linkedList; we set next pointers for nth level; since have access to left and right pointers
+class Solution {
+    Node leftmost;
+    Node prev;
+    public Node connect(Node root) {
+         leftmost = root;
+        while(this.leftmost != null){
+          //  System.out.println(this.leftmost.val);
+            Node head = leftmost;
+            leftmost = null;
+            prev = null;
+            while(head != null){
+                if(head.left != null) process(head.left);
+                if(head.right != null) process(head.right);
+                
+                head = head.next;
+            }
+        }
+        return root;
+    }
+    
+    public void process(Node node){
+        if(prev == null){
+            prev = node;
+            leftmost = node;
+        }
+        else{
+            prev.next = node;
+            prev = node;
+        }
+    }
+}
