@@ -1,0 +1,42 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+// Inorder traversal
+// We keep track of our first and second problem
+// time complexity : O(N);  // traversal of all nodes
+// space complexity : O(N) // impicit stack
+// We keep updating the second probelm until be encounter no other second problem while doing inorder traversal
+class Solution {
+    TreeNode first, second, prev;
+    public void recoverTree(TreeNode root) {
+        helper(root);
+        // swap
+        int temp = first.val;
+        first.val = second.val;
+        second.val = temp;
+    }
+    // complete inorder traversal of tree
+    public void helper(TreeNode root){
+        // inorder traversal
+        helper(root.left);
+        
+        if(prev != null || prev.val > root.val){ // not in sorted order; if prev > root.val
+            if(first == null){ // first time encountered problem
+                first = prev;
+                second = root;
+            }
+            else{ // keep updating the second if I encounter the problem again
+                second = root;
+            }
+        }
+        prev = root;
+        
+        helper(root.right);
+    }
+}
