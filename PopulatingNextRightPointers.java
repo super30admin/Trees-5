@@ -1,41 +1,33 @@
-// Time Complexity : O(n)  
-// Space Complexity : O(n), queue size
+// Time Complexity : O(n - 2^h)  
+// Space Complexity : O(1)
 // Did this code successfully run on Leetcode : yes
 // Any problem you faced while coding this : no
 
 // Your code here along with comments explaining your approach
-// this would be the bruteforce level oreder traversal to connect the nodes
-// uses extra space of O(n) for queue
+// form connections at level N+1 at level N
+// make connection 1 as connect level N node's left child to right child, then connection 2 as node.right.next = node.next.left
 
 class Solution {
     public Node connect(Node root) {
-        if(root==null) return root;
+        if(root==null)
+            return root;
         
-        Queue<Node> queue = new LinkedList<Node>();
-        queue.add(root);
+        Node level = root;
         
-        while(!queue.isEmpty()){
-            int size = queue.size();
+        while(level.left!=null){
+            Node head = level;
             
-            Node cur = null, prev = null;
-            
-            for(int i=0; i<size; i++){
-                cur = queue.poll();
+            while(head!=null){
+                head.left.next = head.right;
                 
-                if(cur.left!=null){
-                    queue.offer(cur.left);
-                }
-                if(cur.right!=null){
-                    queue.offer(cur.right);
+                if(head.next!=null){
+                   head.right.next = head.next.left;  
                 }
                 
-                if(prev!=null){
-                    prev.next = cur;
-                }
-                prev = cur;
+                head = head.next;
             }
             
-            cur.next= null;
+            level = level.left;
         }
         
         return root;
