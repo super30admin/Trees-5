@@ -1,3 +1,32 @@
+// BFS Without space, Time - O(N)
+class Solution {
+    public Node connect(Node root) {
+         if(root == null) {
+            return root;
+        }
+        
+        Node level = root;
+        Node cur = level;
+        while(level!=null) {    
+            level = cur.left;  
+            while(cur != null) {
+                if(cur.left!=null) {
+                    cur.left.next = cur.right;                                
+                    if(cur.next!=null) {
+                        cur.right.next = cur.next.left;                    
+                    }
+                }
+                cur = cur.next;
+            }
+            cur = level;
+        }
+        
+        
+        return root;
+        
+    }
+
+    
 // DFS Recursive, Time - O(N), Space - O(H)
 
 class Solution {
