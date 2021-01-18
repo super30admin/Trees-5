@@ -1,0 +1,39 @@
+//TC: O(n)
+//SC: O(n) - recursice stack
+
+//Approach:Idea is to perform InOrderTraversal and additionally store mismatch value in first and second TreeNOde-> Swap the first and second;
+//Hint: First mismatch = PREV && secondmismatch = ROOT
+
+class Solution {
+    TreeNode first; TreeNode second; TreeNode prev;
+    public void recoverTree(TreeNode root) {
+        if(root==null){
+            return;
+        }
+        recoverTreeInorder(root);
+        // System.out.println(" F: " + first.val + " S: " + second.val);
+        if(first!=null && second!=null){
+            int temp = first.val;
+            first.val = second.val;
+            second.val = temp;
+        }
+    }
+    
+    public void recoverTreeInorder(TreeNode root){
+        if(root==null){
+            return;
+        }
+        recoverTreeInorder(root.left);
+        if(prev!=null && prev.val>=root.val){
+            if(first == null){
+                first = prev;
+                second = root;
+            }else{
+                second = first;
+                first = root; 
+            }
+        }
+        prev = root; 
+        recoverTreeInorder(root.right);
+    } 
+}
