@@ -1,0 +1,33 @@
+//TC: O(n)
+//SC: O(n)
+
+//Approach: Idea is to use queue and perform level order traversal. Set next of current node to polled element fro queue.
+//Hint: if it's last element at that level, skip the next right pointer;
+
+class Solution {
+    public Node connect(Node root) {
+        if(root==null){
+            return null;
+        }
+        
+        Queue<Node> que = new LinkedList<>();
+        que.add(root);
+        // Node curr = que.peek();
+        while(!que.isEmpty()){
+            int size = que.size();
+            for(int i = 0 ; i < size ; i++){
+                Node curr = que.poll();
+                if(i!=size-1){
+                    curr.next = que.peek();
+                }
+                if(curr.left !=null){
+                    que.add(curr.left);
+                }
+                if(curr.right!=null){
+                    que.add(curr.right);
+                }
+            }
+        }
+        return root;
+    }
+}
