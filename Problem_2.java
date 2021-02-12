@@ -1,75 +1,83 @@
 // Time Complexity :O(n)
-// Space Complexity :2 *O(n)
+// Space Complexity :O(n)
 // Did this code successfully run on Leetcode :
 // Any problem you faced while coding this :
 
 
 // Your code here along with comments explaining your approach
+  //store the inorder traversal of and then find out the two nodes and swap them.
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
  *     int val;
  *     TreeNode left;
  *     TreeNode right;
- *     TreeNode(int x) { val = x; }
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
  * }
  */
 class Solution {
-    List<TreeNode> firstPath;
-    List<TreeNode> secondPath;
-    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
-        firstPath=new ArrayList<>();
-        secondPath=new ArrayList<>();
-        dfsFirst(root,p,new ArrayList<>());
-        dfsSecond(root,q,new ArrayList<>());
-        // System.out.println(firstPath);
-        // System.out.println(secondPath);
-        if(secondPath.contains(p)){
-            return p;
-        }
-        TreeNode myNode=null;
-        for(int i=0;i<firstPath.size();i++){
-            if(secondPath.contains(firstPath.get(i))){
-                myNode=firstPath.get(i);
+    List<TreeNode> list;
+    public void recoverTree(TreeNode root) {
+        list=new ArrayList<>();
+        dfs(root);
+        TreeNode firstElement=null;
+        TreeNode secondElement=null;
+        
+        TreeNode prev=list.get(0);
+        for(int i=1;i<list.size();i++){
+            if(prev.val>list.get(i).val && firstElement==null){
+                firstElement=prev;
             }
+            if(prev.val>list.get(i).val && firstElement!=null){
+                secondElement=list.get(i);
+            }
+            prev=list.get(i);
         }
-        //System.out.println(myNode.val);
-        return myNode;
+        // System.out.println(firstElement.val);
+        // System.out.println(secondElement.val);
+        int temp=firstElement.val;
+        firstElement.val=secondElement.val;
+        secondElement.val=temp;
     }
     
-    public void dfsFirst(TreeNode node,TreeNode find,List<TreeNode> path){
+    public void dfs(TreeNode node){
         if(node==null){
             return;
         }
-        if(node==find){
-            path.add(node);
-            firstPath=new ArrayList<>(path);
-            path.remove(path.size()-1);
-            //System.out.println(finalPath);
-            return;
-        }
-        path.add(node);
-        dfsFirst(node.left,find,path);
-        dfsFirst(node.right,find,path);
-        path.remove(path.size()-1);
-        
+        dfs(node.left);
+        list.add(node);
+        dfs(node.right);
+    }
+}
+
+//The below solution didn't work as there can be invalid subtree.
+class Solution {
+    public void recoverTree(TreeNode root) {
+        dfs(root);
     }
     
-        public void dfsSecond(TreeNode node,TreeNode find,List<TreeNode> path){
+    public void dfs(TreeNode node){
         if(node==null){
             return;
         }
-        if(node==find){
-            path.add(node);
-            secondPath=new ArrayList<>(path);
-            //System.out.println(finalPath);
-            path.remove(path.size()-1);
-            return;
+        if(node.left!=null && node.left.val>node.val){
+            int temp=node.val;
+            node.val=node.left.val;
+            node.left.val=temp;
         }
-        path.add(node);
-        dfsSecond(node.left,find,path);
-        dfsSecond(node.right,find,path);
-        path.remove(path.size()-1);
-        
+        if(node.right!=null && node.right.val<node.val){
+            int temp=node.val;
+            node.val=node.right.val;
+            node.right.val=temp;
+        }
+        dfs(node.left);
+        dfs(node.right);
     }
 }
