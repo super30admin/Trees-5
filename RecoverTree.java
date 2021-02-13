@@ -22,71 +22,23 @@
  */
 class Solution {
 
-    List<TreeNode> treeList;
+    TreeNode first;
+    TreeNode last;
+    TreeNode prev;
+    boolean flag;
 
     public void recoverTree(TreeNode root) {
 
-        treeList = new ArrayList<>();
-
-        treeList.add(new TreeNode(Integer.MIN_VALUE));
         dfs(root);
-        treeList.add(new TreeNode(Integer.MAX_VALUE));
 
-        TreeNode first = null;
-        int firstIndex=0;
-
-        Stack<TreeNode> s = new Stack<>();
-        Stack<Integer> idx = new Stack<>();
-
-        for(int i=1;i<treeList.size()-1;i++){
-
-            TreeNode cur = treeList.get(i);
-
-            // Find nodes that are against the BST
-            if(cur.val < treeList.get(i-1).val || cur.val > treeList.get(i+1).val){
-                if(first == null){
-                    first = cur;
-                    firstIndex = i;
-                }
-                else{
-                    s.push(cur);
-                    idx.push(i);
-                }
-                System.out.println(cur.val);
-            }
-        }
-
-        if(s.size() == 1){
-            TreeNode cur = s.pop();
-            int temp = first.val;
-            first.val = cur.val;
-            cur.val = temp;
-            return;
-        }
-
-        // Swap the nodes
-        while(!s.isEmpty()){
-
-            TreeNode cur = s.pop();
-            int index = idx.pop();
-
-            int secondPrev = treeList.get(index-1).val;
-            int secondNext = treeList.get(index+1).val;
-
-            int firstPrev = treeList.get(firstIndex-1).val;
-            int firstNext = treeList.get(firstIndex+1).val;
-
-            if(first.val > secondPrev && first.val < secondNext && cur.val > firstPrev && cur.val < firstNext){
-                int temp = first.val;
-                first.val = cur.val;
-                cur.val = temp;
-                return;
-            }
-
-        }
+        //swap the nodes
+        int temp = first.val;
+        first.val = last.val;
+        last.val = temp;
 
     }
 
+    // Inorder traversal
     public void dfs(TreeNode root){
 
         if(root == null){
@@ -94,7 +46,20 @@ class Solution {
         }
 
         dfs(root.left);
-        treeList.add(root);
+
+        // check the prev node to have a BST
+        if(prev != null && prev.val >= root.val){
+            if(!flag){
+                first = prev;
+                last = root;
+                flag = true;
+            }
+            else{
+                last = root;
+            }
+        }
+        prev = root;
+
         dfs(root.right);
 
     }
