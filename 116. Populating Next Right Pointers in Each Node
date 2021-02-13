@@ -1,0 +1,43 @@
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
+"""
+from collections import deque
+class Solution:
+    def connect(self, root: 'Node') -> 'Node':
+        # check for the empty tree
+        if(not root):
+            return None;
+        # intialize queue for level order traversal
+        queue = deque()
+        queue.append(root);
+        # scan all the nodes in level order
+        while(queue):
+            
+            levelsize = len(queue);
+            prev = None
+            # visit the current level nodes
+            for i in range(levelsize):
+                node = queue.popleft();
+                # populate next pointer
+                if(prev):
+                    prev.next = node;
+                # check for left child and push into the queue
+                if(node.left):
+                    queue.append(node.left);
+                # check for the right child and push into the queue
+                if(node.right):
+                    queue.append(node.right);
+                prev = node;
+        return root;
+        
+        '''
+        time complexity = O(n)
+        space complexity = O(n)
+        '''
+        
