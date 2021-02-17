@@ -47,6 +47,30 @@ class Solution {
     }
 }
 
+// DFS
+// TC: O(N) , N -> no. of nodes of the tree
+// SC: O(H) , H-> height of the tree
+// Did it run successfully on Leetcode? :Yes
+class Solution {
+    public Node connect(Node root) {
+        if ( root == null)
+            return null;
+        dfs(root.left, root.right);
+        return root;
+    }
+    private void dfs(Node left, Node right)
+    {
+        //base
+        if ( left == null && right == null)
+            return;
+        //logic
+        left.next = right;
+        dfs(left.left, left.right);
+        dfs(left.right, right.left);
+        dfs(right.left, right.right);
+    }
+}
+
 // TC: O(N) , N -> no. of nodes of the tree
 // SC: O(N) , size of queue -> no. of nodes of the tree
 // Did it run successfully on Leetcode? :Yes
