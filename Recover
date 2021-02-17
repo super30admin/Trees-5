@@ -1,0 +1,34 @@
+/*
+TC: O(n)
+SC: Constant space.
+ */
+
+class Recover{
+    TreeNode first,last,prev;
+    boolean flag;
+    public void recoverTree(TreeNode root) {
+        helper(root);
+        int temp = first.val;
+        first.val = last.val;
+        last.val = temp;
+    }
+
+    private void helper(TreeNode root){
+
+        if (root == null) return;
+
+        helper(root.left);
+        if (prev!= null && prev.val >= root.val){
+            if (!flag){
+                first = prev;
+                last = root;
+                flag = true;
+            }
+            else{
+                last = root;
+            }
+        }
+        prev= root;
+        helper(root.right);
+    }
+}
