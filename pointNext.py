@@ -82,3 +82,46 @@ class Solution:
                 curr = curr.next
             level = level.left
         return root
+
+# Using DFS:
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
+"""
+
+class Solution:
+    
+    """
+    Description: Populate next right pointers in each node
+    
+    Time Complexity: O(n)
+    Space Complexity: O(h)
+    
+    Approach: Using DFS
+    - connect nodes left -> right, right -> left (for left.left), and left -> right (for left.right)
+    - recursively call until left == None
+    """
+    
+    def connect(self, root: 'Node') -> 'Node':
+            
+        if root == None: return
+        
+        self.dfs(root.left, root.right)
+        return root
+    
+    def dfs(self, left, right):
+        
+        # base
+        if left == None: return
+        
+        # logic
+        left.next = right
+        self.dfs(left.left, left.right)
+        self.dfs(left.right, right.left)
+        self.dfs(right.left, right.right)
+        
