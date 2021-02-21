@@ -1,0 +1,69 @@
+//TC - o(n)
+//SC - o(n)
+class Solution {
+    public Node connect(Node root) {
+    
+        //edge case
+        if(root == null)
+            return root;
+        //to add 
+        Queue<Node> q = new LinkedList<>();
+        q.add(root);
+        
+        //till queue is not empty
+        while(!q.isEmpty()){
+            //get size - no of nodes in that level
+            int size = q.size();
+            for(int i=0;i<size;i++){
+                //poll first node
+                Node node = q.poll();
+                //if it is not the last node of the tree set node.next
+                if(i < size-1){
+                    node.next = q.peek();
+                }
+                //if node.left or node.right is not null push to the queue for next level
+                if(node.left != null)
+                    q.add(node.left);
+                if(node.right != null)
+                    q.add(node.right);
+            }
+        }
+        //return root at the end
+        return root;
+    }
+}
+
+
+//TC - o(n)
+//SC - o(1)
+class Solution {
+    public Node connect(Node root) {
+    
+        //edge case
+        if(root == null)
+            return root;
+        
+        Node leftNode = root;
+        
+        //if lift node's left is not null traverse
+        while (leftNode.left != null) {
+            Node curr = leftNode;
+            
+            //next level nodes
+            //connect left.next to right 
+            //right.next to left
+            while(curr != null){
+                curr.left.next = curr.right;
+                if(curr.next != null) {
+                    curr.right.next = curr.next.left;
+                }
+                curr = curr.next;
+            }
+            
+            leftNode = leftNode.left;
+        }
+        
+        //return root at the end
+        return root;
+    }
+}
