@@ -1,4 +1,8 @@
 //Populating Next Right Pointers in Each Node
+
+//tc - O(n) n - number of nodes
+//sc - O(n) recursive stack
+
 class Problem1{
     public static void main(String[] args){
         Node root = new Node(1);
