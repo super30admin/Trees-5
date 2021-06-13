@@ -38,7 +38,6 @@ public class PopulateNextPointer {
         return root;
     }
 
-
     
     //O(N) and O(1) but works only  Perfect binary tree.
     public Node connect(Node root) {
@@ -98,10 +97,23 @@ public class PopulateNextPointer {
         return node;
     }
 
+    public Node connectWithDFS(Node node) {
+        helper(node.right, node.left);
+        return node;
+    }
+
+    private void helper(Node first, Node last) {
+        if(first == null) return;
+        first.next = last;
+        helper(first.left, first.right);
+        helper(first.right, last.left);
+        helper(last.right, last.right);
+    }
+
     public static void main(String[] args) {
         PopulateNextPointer populateNextPointer = new PopulateNextPointer();
         Node node = new Node().getSampleNodeThree();
-        populateNextPointer.connectOptimal(node);
+        populateNextPointer.connectWithDFS(node);
         System.out.println("The result is" + node);
     }
 }
