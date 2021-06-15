@@ -1,3 +1,6 @@
+# TC: O(N) since we are traversing all the nodes exactly once. 
+# SC: O(H) where H is the height of the recursive stack to perform inorder traversal. 
+
 class Solution:
     def recoverTree(self, root: TreeNode) -> None:
         """
