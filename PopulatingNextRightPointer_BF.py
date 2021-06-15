@@ -1,3 +1,5 @@
+# TC: O(N) since we are traversing all the nodes. 
+# SC: O(N) since we use a queue, to perform the BFS. 
 
 class Solution:
     def connect(self, root: 'Node') -> 'Node':
