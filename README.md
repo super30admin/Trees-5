@@ -37,6 +37,46 @@ You may only use constant extra space.
 
 Recursive approach is fine, implicit stack space does not count as extra space for this problem.
 
+# Time Complexity = O(n)
+# Space Complexity = O(1)
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
+"""
+
+class Solution:
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        # if root is None:
+        #     return 
+        # if root.left is not None:
+        #     root.left.next=root.right
+        # if root.next is not None and root.right is not None:
+        #     root.right.next=root.next.left
+        # self.connect(root.left)
+        # self.connect(root.right)
+        # return root
+        if root is None:
+            return 
+        level=root
+        while level.left is not None:
+            curr=level
+            while curr is not None:
+                curr.left.next=curr.right
+                if curr.next is not None and curr.right is not None:
+                    curr.right.next=curr.next.left
+                curr=curr.next
+            level=level.left
+        return root
+        
+        
+        
+
 ## Problem2 Recover Binary Search Tree(https://leetcode.com/problems/recover-binary-search-tree/)
 
 Two elements of a binary search tree (BST) are swapped by mistake.
@@ -97,3 +137,37 @@ Output: [2,1,4,null,null,3]
        /
 
      3
+
+
+# Time Complexity = O(n)
+# Space Complexity = O(1)
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def recoverTree(self, root: Optional[TreeNode]) -> None:
+        first,second,prev=None,None,None
+        flag=False
+        def inorder(root):
+            nonlocal first,second,prev,flag
+            if root is None:
+                return 
+            inorder(root.left)
+            if prev is not None and prev.val>root.val:
+                if flag==False:
+                    first=prev
+                    second=root
+                    flag=True
+                else:
+                    second=root
+            prev=root
+            inorder(root.right)
+        inorder(root)
+        first.val,second.val=second.val,first.val
+        """
+        Do not return anything, modify root in-place instead.
+        """
+        
