@@ -37,6 +37,89 @@ You may only use constant extra space.
 
 Recursive approach is fine, implicit stack space does not count as extra space for this problem.
 
+//Solutions 
+
+//Solution 1 
+class Solution {
+    //Time Complexity: O(N)
+    //Space Complexity: O(N)
+    public Node connect(Node root) {
+        Queue<Node> queue = new LinkedList<Node>();
+        queue.add(root);
+        
+        while(!queue.isEmpty())
+        {
+            int size = queue.size();
+            Node prev = queue.poll();
+             if(prev!= null && prev.left != null)
+               {
+                   queue.add(prev.left);
+                   queue.add(prev.right);
+               }
+            for(int i= 1; i<size; i++ )
+            {
+               Node curr = queue.poll();
+                if(curr.left != null)
+                {
+                    queue.add(curr.left);
+                    queue.add(curr.right);
+                }
+              prev.next = curr;
+              prev = curr;
+            }
+        }
+        
+        return root;
+    }
+}
+//Solution 2
+class Solution {
+    //Time Complexity: O(N)
+    //Space Complexity: O(1)
+    public Node connect(Node root) {
+        Queue<Node> queue = new LinkedList<Node>();
+        Node level = root;
+        
+        while(level!= null && level.left!= null )
+        {
+            Node curr = level;
+             //process all the nodes in this list. 
+            while(curr != null)
+            {
+                curr.left.next = curr.right;
+                if(curr.next!= null)
+                {
+                    curr.right.next = curr.next.left;
+                }
+                curr = curr.next;
+            }
+            
+            //move the curr to the next level
+            level = level.left;
+        }
+        
+        return root;
+    }
+}
+
+//Soltuion 3  - DFS - uses recursive stack
+class Solution {
+    public Node connect(Node root) {
+        if(root == null) return null;
+        dfs(root.left, root.right);
+        return root;
+    }
+    private void dfs(Node left, Node right)
+    {
+        if(left == null) return;
+        left.next = right;
+        dfs(left.left, left.right);
+        dfs(left.right, right.left);
+        dfs(right.left, right.right);
+        
+    }
+}
+
 ## Problem2 Recover Binary Search Tree(https://leetcode.com/problems/recover-binary-search-tree/)
 
 Two elements of a binary search tree (BST) are swapped by mistake.
@@ -97,3 +180,52 @@ Output: [2,1,4,null,null,3]
        /
 
      3
+
+//Solution 
+
+class Solution {
+    //Time Complexity: O(N)
+    //Space Complexity: O(H), height of the tree
+    TreeNode prev;
+    TreeNode first;
+    TreeNode second;
+    private void inorder(TreeNode root)
+    {
+        if(root == null) return;
+        inorder(root.left);
+        if(prev != null && prev.val >= root.val)
+        {
+            if(first == null)
+            {
+                first= prev;
+                System.out.println(first.val);
+                if (second == null)
+                {
+                    second = root;
+                    
+                }
+            }
+            else
+            {
+                second = root;
+                System.out.println(second.val);
+            }
+        }
+        prev = root;
+        inorder(root.right);
+        
+        
+    }
+    public void recoverTree(TreeNode root) {
+        if (root == null) return;
+        this.prev = null;
+        this.first = null;
+        this.second = null;
+        inorder(root);
+        //swap
+        int temp_val = first.val;
+        first.val = second.val;
+        second.val = temp_val;
+            
+    }
+}
