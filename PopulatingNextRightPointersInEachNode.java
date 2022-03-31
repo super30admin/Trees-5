@@ -1,6 +1,6 @@
 /*
-Time Complexity: O()
-Space Complexity: O()
+Time Complexity: O(N), number of nodes in the tree
+Space Complexity: O(1), This solution is iterative so constant space
 Run on Leetcode: yes
 Any difficulties: no
 
