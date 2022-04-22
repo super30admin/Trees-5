@@ -18,6 +18,7 @@
  * @return {Node}
  */
 
+//DFS Solution with 1 pointer
 var dfs =function(root) {
     if(root.left === null) return;
     root.left.next = root.right;
