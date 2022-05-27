@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 // Definition for a Node.
 class Node {
     public int val;
@@ -41,6 +44,36 @@ public class NextRightPointer {
             }
 
             level = level.left;
+        }
+
+        return root;
+    }
+
+    // Level order traversal
+    // TC : O(n)
+    // SC : O(n/2) = O(n)
+    public Node connectQueue(Node root) {
+        if(root == null) return null;
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+
+        while(!queue.isEmpty()) {
+            int size = queue.size();
+
+            Node current = queue.poll();
+
+            if(current.left != null) queue.add(current.left);
+            if(current.right != null) queue.add(current.right);
+
+            for(int i=1; i < size; i++) {
+                Node temp = queue.poll();
+                current.next = temp;
+                current = temp;
+
+                if(current.left != null) queue.add(current.left);
+                if(current.right != null) queue.add(current.right);
+            }
         }
 
         return root;
