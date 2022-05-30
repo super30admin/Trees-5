@@ -53,4 +53,23 @@ public class Problem1 {
         }
         return root;
     }
+
+    //DFS solution
+    // TC : O(n)
+    // Sc : O(h) where h is height of tree
+    public Node connect1(Node root) {
+        if (root == null) return root;
+
+        dfs(root.left, root.right);
+
+        return root;
+    }
+    private void dfs(Node left, Node right){
+        if (left == null) return;
+
+        left.next = right;
+        dfs(left.left, left.right);
+        dfs(right.left, right.right);
+        dfs(left.right, right.left);
+    }
 }
