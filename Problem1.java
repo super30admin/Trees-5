@@ -72,4 +72,28 @@ public class Problem1 {
         dfs(right.left, right.right);
         dfs(left.right, right.left);
     }
+
+    // Two pointer solution
+    // TC : O(n)
+    // SC : O(1)
+    public Node connect3(Node root) {
+        if (root == null) return root;
+
+        Node lvl = root;
+
+        while(lvl.left != null){
+            Node curr = lvl;
+            while (curr != null){
+                curr.left.next = curr.right;
+                if (curr.next != null){
+                    curr.right.next = curr.next.left;
+                }
+                curr = curr.next;
+            }
+            lvl = lvl.left;
+        }
+
+        return root;
+    }
+
 }
