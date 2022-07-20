@@ -50,7 +50,7 @@ class Solution:
 #         self.dfs(root.right)
 # Time Complexity: O(n)
 # Space Complexity: O(h),stack space
-# Recursive solution
+# Iterative solution
     def recoverTree(self, root: Optional[TreeNode]) -> None:
         """
         Do not return anything, modify root in-place instead.
