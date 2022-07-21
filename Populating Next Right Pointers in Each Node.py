@@ -1,3 +1,5 @@
+# TC : O(n)
+# SC : O(1)
 """
 # Definition for a Node.
 class Node(object):
