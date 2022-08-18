@@ -22,7 +22,7 @@ class Node {
 */
 
 // TC: O(N)
-// SC: O(1)
+// SC: O(N)
 
 class Solution {
     public Node connect(Node root) {
