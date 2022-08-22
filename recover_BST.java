@@ -14,18 +14,15 @@ class Solution {
         if (root == null)
             return;
         inorder(root);
-        // swapping after finding mismatch
         int temp = first.val;
         first.val = second.val;
         second.val = temp;
     }
 
     private void inorder(TreeNode root) {
-        // base
         if (root == null)
             return;
 
-        // logic
         inorder(root.left);
         if (prev != null && prev.val >= root.val) {
             if (first == null) {
