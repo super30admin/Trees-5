@@ -1,5 +1,69 @@
 
 
+
+//Approach - 2 : Without Queue, prev, curr  , Best Approach ***
+//Time Complexity : O(n)
+//Space Complexity : O(1)
+class Solution {
+    public Node connect(Node root) {        
+        //if root is null , return null node
+        if(root == null) return null; 
+        
+        //level nodefor iterating each node
+        Node level = root;
+
+        //we will iterate til last child, i.e level.left != null
+        while(level.left != null){
+            
+            //root ==> level ==> curr // node 1
+            //Intialize curr for every level
+            Node curr = level;
+
+            //loop every level
+            while(curr != null){               
+                curr.left.next = curr.right;               
+                //except last node 
+                if(curr.next != null){
+                  curr.right.next = curr.next.left;
+                }                   
+                curr = curr.next;
+            }            
+            //move to next level
+            level = level.left;                
+        }    
+     return root;
+    }
+}
+
+
+
+
+//Approach - 3 : DFS
+//Time Complexity : O(n)
+//Space Complexity : O(h)
+class Solution {
+    public Node connect(Node root) {
+        if(root == null) return null;
+        dfs(root);
+        return root;
+    }  
+
+    private void dfs(Node root){
+        if(root.left == null) return;
+        
+        root.left.next = root.right;
+        
+        if(root.next != null){
+            root.right.next = root.next.left;
+        }
+        
+        dfs(root.left);
+        dfs(root.right);
+        
+    }
+}
+
+
 //Approach - 1: Queue, prev, curr 
 //Time Complexity : O(n)
 //Space Complexity : O(n)
