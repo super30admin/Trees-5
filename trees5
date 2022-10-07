@@ -1,0 +1,43 @@
+Recover Binary Search Tree
+#tc: O(n)
+#sc: O(1)
+class Solution:
+    def recoverTree(self, root):
+        cur, node, cands = root, TreeNode(-float("inf")), []
+        while cur:
+            if cur.left:
+                pre = cur.left
+                while pre.right and pre.right != cur:
+                    pre = pre.right
+                if not pre.right:
+                    pre.right = cur
+                    cur = cur.left
+                else:
+                    pre.right = None
+                    if cur.val < node.val:
+                        cands += [node, cur]
+                    node = cur
+                    cur = cur.right
+            else:
+                if cur.val < node.val:
+                    cands += [node, cur]
+                node = cur
+                cur = cur.right
+            
+        cands[0].val, cands[-1].val = cands[-1].val, cands[0].val
+        
+#Populating Next Right Pointers in Each Node
+#Time  Complexity: O(N)
+#Space Complexity: O(1)
+class Solution(object):
+    def connect(self, root):
+        if not root: return root
+        if root.left: 
+            left, right = root.left, root.right
+            self.connect(left)
+            self.connect(right)
+            while left:
+                left.next = right
+                left, right = left.right, right.left
+            return root
+        
