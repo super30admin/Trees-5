@@ -1,0 +1,30 @@
+#  116. Populating Next Right Pointers in Each Node
+'''
+Leetcode all test cases passed: Yes
+class Solution:
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+      n is no of nodes in binary tree
+      Time Complexity: O(n)
+      Space Complexity: O(1)
+'''
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+from collections import deque
+class Solution:
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        level = root
+        
+        while level and level.left != None:
+            curr = level
+            while curr != None:
+                curr.left.next = curr.right
+                if curr.next != None:
+                    curr.right.next = curr.next.left
+                curr = curr.next
+            level = level.left
+        return root
