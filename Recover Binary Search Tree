@@ -1,0 +1,48 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def recoverTree(self, root: Optional[TreeNode]) -> None:
+        """
+        Do not return anything, modify root in-place instead.
+        """
+        f = None
+        s = None
+        a = None
+        node = root
+        while node:
+            if node.left:
+                t = node.left
+                c = False
+                while t.right:
+                    if a != t:
+                        t = t.right
+                        continue
+                    c = True
+                    t.right = None
+                    if a and node.val < a.val:
+                        if not f:
+                            f = a
+                        s = node
+                    a = node
+                    node = node.right
+                    break
+
+                if not c:
+                    t.right = node                
+                    node = node.left
+            else:
+                if a and node.val < a.val:
+                    if not f:
+                        f = a
+                    s = node
+                a = node
+                node = node.right
+        f.val, s.val = s.val, f.val
+        
+# Time Complexity: O(n)
+# Space Complexity: O(1)
+# Successfully implemented on Leetcode
