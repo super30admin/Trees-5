@@ -1,5 +1,5 @@
-// Time Complexity : O(h)
-// Space Complexity : O(1)
+// Time Complexity : O(n)
+// Space Complexity : O(h)
 // Did this code successfully run on Leetcode : Yes
 // Any problem you faced while coding this : No
 
@@ -52,5 +52,58 @@ public class RecoverBST {
         
         prev = root;
         inorder(root.right);
+    }
+}
+
+// Time Complexity : O(n)
+// Space Complexity : O(h)
+// Did this code successfully run on Leetcode : Yes
+// Any problem you faced while coding this : No
+
+
+// Your code here along with comments explaining your approach : Recursive Solution
+/*
+ * Approach 2 - Iterative Stack Solution
+ */
+TreeNode first;
+TreeNode second;
+
+public void recoverTree(TreeNode root) {
+    if(root == null)
+        return;
+    
+    inorder(root);
+    int temp = first.val;
+    first.val = second.val;
+    second.val = temp;
+}
+
+public void inorder(TreeNode root)
+{
+    Stack<TreeNode> st = new Stack<>();
+    TreeNode prev = null;
+    
+    while(root != null || !st.isEmpty())
+    {
+        while(root != null)
+        {
+            st.push(root);
+            root = root.left;
+        }
+        root = st.pop();
+        if(prev != null && prev.val >= root.val)
+        {
+            if(first == null)
+            {
+                first = prev;
+                second = root;
+            }
+            else
+            {
+                second = root;
+            }
+        }
+        prev = root;
+        root = root.right;
     }
 }
