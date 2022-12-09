@@ -1,5 +1,5 @@
 //TimeComplexity.  O(n)
-//SpaceComplexity. O(h)
+//SpaceComplexity. O(n)
 
 class Solution {
     public Node connect(Node root) {
