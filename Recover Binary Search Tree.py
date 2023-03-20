@@ -1,18 +1,45 @@
-class Solution:
-    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
-        # optimized with space O(1)
+// Time Complexity :O(n)
+// Space Complexity :O(1)
+// Did this code successfully run on Leetcode : Yes
+// Any problem you faced while coding this :No
 
+class Solution:
+
+    # def __init__(self):
+    #     self.first = TreeNode(0)
+    #     self.second = TreeNode(0)
+    def recoverTree(self, root: Optional[TreeNode]) -> None:
+        """
+        Do not return anything, modify root in-place instead.
+        """
         if root is None:
             return None
 
-        level = root
-        while level.left:
-            curr = level
-            while curr:
-                curr.left.next = curr.right
-                if curr.next:
-                    curr.right.next = curr.next.left
-                curr = curr.next
-            level = level.left
+        first = second = prev = None
 
-        return root
+        def inorder(root: Optional[TreeNode]):
+            nonlocal first, second, prev
+
+            st = []
+            while root!= None or len(st)!= 0:
+                while root:
+                    st.append(root)
+                    root = root.left
+                root = st.pop()
+                if prev is not None and prev.val>=root.val:
+                    if first is None:
+                        first = prev
+                        second = root
+                        # print(first.val, second.val)
+                    else:
+                        second = root
+                prev = root
+                root = root.right
+                # print(first, second)
+
+        # print(first)
+        inorder(root)
+        # print(root, first.val, second.val)
+        temp = first.val
+        first.val = second.val
+        second.val = temp
