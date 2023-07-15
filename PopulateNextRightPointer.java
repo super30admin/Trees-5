@@ -53,6 +53,18 @@ public class PopulateNextRightPointer {
             preorder(node.right, node, false);
         }
     }
+
+    private void preorder2(Node node){
+        if(node.left == null) return;
+
+        node.left.next = node.right;
+        if(node.next != null){
+            node.right.next = node.next.left;
+        }
+
+        preorder2(node.left);
+        preorder2(node.right);
+    }
 }
 
 // Time Complexity : O(n) where n is the number of nodes as we need to vist each node at least once
@@ -79,6 +91,29 @@ public class PopulateNextRightPointer {
                 }
             }
         }
+        return root;
+    }
+}
+
+class PopulateNextRightPointerIterative{
+
+    //iterative, no extra space
+    public Node connect(Node root) {
+
+        if(root == null) return root;
+        Node level = root;
+        while(level.left != null){
+            Node current = level;
+            while(current != null){
+                current.left.next = current.right;
+                if(current.next != null){
+                    current.right.next = current.next.left;
+                }
+                current = current.next;
+            }
+            level = level.left;
+        }
+
         return root;
     }
 }
