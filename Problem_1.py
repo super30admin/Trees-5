@@ -126,3 +126,26 @@ class Solution(object):
             root.right.next=root.next.left
         self.dfs(root.left)    
         self.dfs(root.right)
+
+# Approach - 5
+
+class Solution(object):
+    def connect(self, root):
+        """
+        :type root: Node
+        :rtype: Node
+        """
+        if not root:
+            return None
+        self.dfs(root.left,root.right)
+        return root
+
+    def dfs(self,left,right):
+        if not left:
+            return
+        
+        left.next=right
+        self.dfs(left.left,left.right)
+
+        self.dfs(left.right,right.left)
+        self.dfs(right.left,right.right)
