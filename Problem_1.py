@@ -4,7 +4,7 @@ Problem : 1
 Time Complexity : O(n)
 
 Space Complexity : 
-Approach 1 & 2 - O(n)
+Approach 1 & 2 & 4 - O(n)
 Approach 3 - O(1)
 
 Did this code successfully run on Leetcode : Yes
@@ -15,6 +15,7 @@ Any problem you faced while coding this : No
 # Populating Next Right Pointers in Each Node
 
 # Approach - 1
+# BFS
 
 class Solution(object):
     def connect(self, root):
@@ -51,6 +52,7 @@ class Solution(object):
                 node.next=nextNode
 
 # Approach - 2
+# BFS
 
 class Solution(object):
     def connect(self, root):
@@ -98,3 +100,29 @@ class Solution(object):
                 curr=curr.next
             level=level.left
         return root
+    
+
+# Approach - 4
+# DFS
+
+class Solution(object):
+    def connect(self, root):
+        """
+        :type root: Node
+        :rtype: Node
+        """
+        if not root:
+            return None
+
+        self.dfs(root)
+        return root
+    
+    def dfs(self,root):
+        # base
+        if not root.left:
+            return
+        root.left.next=root.right
+        if root.next:
+            root.right.next=root.next.left
+        self.dfs(root.left)    
+        self.dfs(root.right)
