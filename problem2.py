@@ -1,47 +1,36 @@
+# Time Complexity: O(n)
+# Space Complexity: O(n)
+# Definition for a Node.
+class Node:
+    def __init__(self, val: int = 0, left: 'Node' = None, right: 'Node' = None, next: 'Node' = None):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
 
-#
-# Complete the 'threatDetector' function below.
-#
-# The function accepts STRING_ARRAY textMessages as parameter.
-#
+class Solution:
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        if not root:
+            return None
 
+        que = []
+        que.append(root) 
 
-def threatDetector(textMessages):
-    for message in textMessages:
-        if len(message) < 6:  # Account for the 3-character symbol
-            print("Invalid input")
-            continue
-        alphanumeric_text = ''.join(c for c in message[:-3] if c.isalnum())
-    
-            
-        symbol = message[-3:]
-        #alphanumeric_text = ''.join(c for c in message[:-3] if c.isalnum())  
-        score = calculate_score(alphanumeric_text)
-        
-        if 1 <= score <= 10:
-            score_level = "Possible"
-        elif 11 <= score <= 40:
-            score_level = "Probable"
-        elif 41 <= score <= 150:
-            score_level = "Escalate"
-        else:
-            score_level = "Ignore"
-            
-        # Check if the message contains "IOT" and if so, set score_level to "Ignore"
-        #if "IOT" in alphanumeric_text:
-           # score_level = "Ignore"
-            
-        print(f"{symbol} {score_level}")
+        while que:
+            level_size = len(que)
+            prev_node = None 
 
-def calculate_score(text):
-    score = 0
-    for i in range(len(text)):
-        for j in range(i + 3, len(text) + 1):
-            if palindrome_check(text[i:j]):
-                score = score + (j - i)
-    return score
+            for _ in range(level_size):
+                node = que.pop(0) 
 
-def palindrome_check(s):
-    return s == s[::-1] and len(s) >= 3
+                if prev_node:
+                    prev_node.next = node #curr node
 
+                prev_node = node  # prev node
 
+                if node.left:
+                    que.append(node.left)
+                if node.right:
+                    que.append(node.right)
+
+        return root
