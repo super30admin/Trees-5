@@ -1,77 +1,33 @@
-#!/bin/python3
+# Time Complexity: O(n)
+# Space Complexity: O(n)
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def recoverTree(self, root: Optional[TreeNode]) -> None:
+        """
+        Do not return anything, modify root in-place instead.
+        """
+        self.first_node = None
+        self.second_node = None
+        self.prev = None
 
-import math
-import os
-import random
-import re
-import sys
+        self.inorder(root)
+        if self.first_node is not None and  self.second_node is not None:
+            self.first_node.val, self.second_node.val = self.second_node.val, self.first_node.val
 
+    def inorder(self,root):
+        if root is None: return
 
+        self.inorder(root.left)
 
-#
-# Complete the 'threatDetector' function below.
-#
-# The function accepts STRING_ARRAY textMessages as parameter.
-#
+        if self.prev and self.prev.val > root.val:
+            if self.first_node is None:
+                self.first_node = self.prev
+            self.second_node = root
 
-
-
-
-def threatDetector(textMessages):
-    for message in textMessages:
-        if len(message) < 6:  # Account for the 3-character symbol
-            print("Invalid input")
-            continue
-            
-        symbol = message[-3:]
-        alphanumeric_text = ''.join(c for c in message[:-3] if c.isalnum())
-        
-        if len(alphanumeric_text) < 4:
-            print(f"{symbol} Ignore")
-            continue
-        
-        score = calculate_score(alphanumeric_text)
-        
-        if 1 <= score <= 10:
-            score_level = "Possible"
-        elif 11 <= score <= 40:
-            score_level = "Probable"
-        elif 41 <= score <= 150:
-            score_level = "Escalate"
-        else:
-            score_level = "Ignore"
-            
-        # Check if the message contains "IOT" and if so, set score_level to "Ignore"
-        if "IOT" in message:
-            score_level = "Ignore"
-            
-        print(f"{symbol} {score_level}")
-
-def calculate_score(text):
-    score = 0
-    for i in range(len(text)):
-        for j in range(i + 3, len(text) + 1):
-            if palindrome_check(text[i:j]):
-                score = score + (j - i)
-    return score
-
-def palindrome_check(s):
-    return s == s[::-1] and len(s) >= 3
-
-
-
-
-
-
-
-
-if __name__ == '__main__':
-    textMessages_count = int(input().strip())
-
-    textMessages = []
-
-    for _ in range(textMessages_count):
-        textMessages_item = input()
-        textMessages.append(textMessages_item)
-
-    threatDetector(textMessages)
+        self.prev = root
+        self.inorder(root.right)
