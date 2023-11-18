@@ -1,0 +1,15 @@
+while curr != null
+    if curr's left is null
+        then we dont have anything to explore in left
+        print()
+        now explore right
+        curr = curr.right
+    else
+        We can explore left side too
+        Get predecessor of curr node
+        if(predecessor was already formed)
+            that mean the left part was already explored
+            so break the link and explore right
+        else
+            this means left was not explored, hence we need to form a link to come back to curr
+            pre.right = curr
