@@ -1,0 +1,23 @@
+#Populating Next Right Pointers in Each Node
+
+#The time complexity is O(N), and the space complexity is O(1)
+
+class Solution:
+    def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
+        if not root:
+            return None
+        
+        # Define a helper function to connect nodes at the same level
+        def connect_nodes(node):
+            if not node:
+                return
+            if node.left:
+                node.left.next = node.right
+                if node.next:
+                    node.right.next = node.next.left
+                connect_nodes(node.left)
+                connect_nodes(node.right)
+        
+        connect_nodes(root)
+        return root
+
