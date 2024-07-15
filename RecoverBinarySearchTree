@@ -1,0 +1,64 @@
+Recursive:
+T.c --> O(n)
+S.c --> O(h)
+class Solution {
+    TreeNode first;
+    TreeNode second,prev;
+    int cnt =0;
+    public void recoverTree(TreeNode root) {
+       dfs(root); 
+       int temp = first.val;
+       first.val = second.val;
+       second.val = temp;
+    }
+    private void dfs(TreeNode root){
+        if(root == null || cnt ==2){
+            return;
+        }
+        dfs(root.left);
+        if(prev != null && prev.val > root.val){
+            cnt++;
+           if(first == null){
+            first = prev;
+           } 
+           second = root;
+        }
+        prev = root; 
+        dfs(root.right);
+    }
+}
+**************************************************************************
+Stack:
+T.c --> O(n)
+S.c --> O(h)
+class Solution {
+    TreeNode first;
+    TreeNode second,prev;
+    int cnt =0;
+    public void recoverTree(TreeNode root) {
+       if(root == null || cnt ==2){
+            return;
+        }
+        Stack<TreeNode> stack = new Stack<>();
+        while(root != null || !stack.isEmpty()){
+           while(root != null){
+            stack.push(root);
+            root = root.left;            
+           }
+           root = stack.pop();
+           if(prev != null && prev.val > root.val){
+                cnt++;
+            if(first == null){
+                first = prev;
+            } 
+            second = root;
+           }
+           prev = root; 
+           root = root.right;
+        }       
+        
+       int temp = first.val;
+       first.val = second.val;
+       second.val = temp;
+    }    
+}
