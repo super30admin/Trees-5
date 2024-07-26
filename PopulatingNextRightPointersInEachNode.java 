@@ -1,0 +1,73 @@
+// Time Complexity : O(n)
+// Space Complexity : 1 - O(n), 2 - O(1)
+// Did this code successfully run on Leetcode : Yes
+// Any problem you faced while coding this : No
+
+// Your code here along with comments explaining your approach
+
+// Definition for a Node.
+/*class Node {
+    public int val;
+    public Node left;
+    public Node right;
+    public Node next;
+
+    public Node() {}
+
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, Node _left, Node _right, Node _next) {
+        val = _val;
+        left = _left;
+        right = _right;
+        next = _next;
+    }
+};
+
+
+class Solution {
+    List<List<Node>> levels;
+    public Node connect(Node root) {
+        if(root == null) return null;
+        levels = new ArrayList<>();
+        dfs(root, 0);
+        for(List<Node> list: levels) {
+            for(int i = 0; i<list.size()-1; i++) {
+                list.get(i).next = list.get(i+1);
+            }
+            list.get(list.size()-1).next = null;
+        }
+        return root;
+    }
+    void dfs(Node root, int level) {
+        if(root == null) return;
+        if(level == levels.size()) {
+            List<Node> current = new ArrayList<>();
+            levels.add(current);
+        }
+        levels.get(level).add(root);
+        dfs(root.left, level+1);
+        dfs(root.right, level+1);
+    }
+}*/
+
+class Solution {
+    public Node connect(Node root) {
+        if(root == null) return null;
+        Node levelNode = root;
+        while(levelNode.left!=null) {
+            Node current = levelNode;
+            while(current!=null) {
+                current.left.next = current.right;
+                if(current.next!=null) {
+                    current.right.next = current.next.left;
+                }
+                current = current.next;
+            }
+            levelNode = levelNode.left;
+        }
+        return root;
+    }
+}
