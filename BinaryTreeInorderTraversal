@@ -1,0 +1,37 @@
+lass Solution {
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> result = new ArrayList<>();
+        TreeNode current = root;
+
+        while (current != null) {
+            if (current.left == null) {
+                // Visit the root node
+                result.add(current.val);
+                // Move to the right subtree
+                current = current.right;
+            } else {
+                // Find the inorder predecessor of current
+                TreeNode pre = current.left;
+                while (pre.right != null && pre.right != current) {
+                    pre = pre.right;
+                }
+
+                if (pre.right == null) {
+                    // Make current as right child of its inorder predecessor
+                    pre.right = current;
+                    // Move to the left subtree
+                    current = current.left;
+                } else {
+                    // Revert the changes made in the tree
+                    pre.right = null;
+                    // Visit the root node
+                    result.add(current.val);
+                    // Move to the right subtree
+                    current = current.right;
+                }
+            }
+        }
+
+        return result;
+    }
+}
