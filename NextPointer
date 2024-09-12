@@ -1,0 +1,23 @@
+/*
+TC: O(n) as we are traversing every node
+SC: Constant as we are not using any aux data structure.
+ */
+class NextPointer{
+    public Node connect(Node root) {
+        if (root == null) return null;
+        Node curr = root;
+        while(curr.left!=null){
+            Node level = curr;
+            while(level!=null){
+                level.left.next = level.right;
+                if (level.next!=null){
+                    level.right.next = level.next.left;
+                }
+                level = level.next;
+            }
+            curr = curr.left;
+        }
+
+        return root;
+    }
+}
