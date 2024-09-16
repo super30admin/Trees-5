@@ -1,0 +1,48 @@
+//TC - o(n) n- no of nodes
+//SC - o(h) h - tree height
+class Solution {
+    
+    TreeNode first;
+    TreeNode last;
+    boolean flag;
+    TreeNode prev;
+    public void recoverTree(TreeNode root) {
+        
+        if(root == null)
+            return;
+        
+        helper(root);
+        //swap the values
+        int temp = first.val;
+        first.val = last.val;
+        last.val = temp;
+        
+    }
+    
+    private void helper(TreeNode root){
+        //base
+        if(root == null)
+            return;
+        
+        //logic
+        helper(root.left);
+        //st.pop()
+        if(prev != null && prev.val >= root.val) {
+            //if flag is false means first bridge happend
+            //set the last and first val
+            if(!flag) {
+                first = prev;
+                last = root;
+                flag = true;
+            } 
+            //flag is true means second bridge happend
+            //just set the value of last pointer as root and return
+            else {
+                last = root;
+                return;
+            }
+        }
+        prev = root;
+        helper(root.right);
+    }
+}
