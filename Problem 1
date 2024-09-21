@@ -1,0 +1,22 @@
+Time:O(n)
+space:O(h)
+
+class Solution {
+    public Node connect(Node root) 
+    {
+        if(root == null) return root;
+        helper(root);
+        return root;    
+    }
+    private void helper(Node root)
+    {
+        if(root.left == null) return;
+        root.left.next = root.right;
+        if(root.next != null)
+        {
+            root.right.next = root.next.left;
+        }
+        helper(root.left);
+        helper(root.right);
+    }
+}
