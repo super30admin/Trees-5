@@ -1,0 +1,38 @@
+//TC = O(n)
+//SC = O(n)
+
+class Solution {
+    TreeNode a, b, prev;
+    public void recoverTree(TreeNode root) {
+        a = b = prev = null;
+        inorder(root);
+        //swapping a and b
+        int temp = a.val;
+        a.val = b.val;
+        b.val = temp;
+        
+    }
+    
+    private void inorder(TreeNode node){
+        if(node == null){
+            return;
+        }
+        
+        inorder(node.left);
+        
+        //instead of maintaining in array we are just finding the values and swapping
+        if(prev != null){
+            if(prev.val > node.val){   //nums[i-1] > nums[i] (same thing)
+                // a and b are variables to transverse
+                b = node;
+                if(a == null){
+                    a = prev;
+                }
+            }
+        }
+        
+        prev = node;
+        
+        inorder(node.right);
+    }
+}

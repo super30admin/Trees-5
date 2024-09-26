@@ -1,0 +1,17 @@
+class Solution {
+    public Node connect(Node root) {
+        connect(root, null);
+        return root;
+        
+    }
+    
+    private void connect(Node node, Node next){
+        if(node == null){
+            return;
+        }
+        node.next = next;
+        
+        connect(node.left, node.right);
+        connect(node.right, node.next == null ? null : node.next.left);
+    }
+}
