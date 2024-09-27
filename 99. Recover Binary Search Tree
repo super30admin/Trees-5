@@ -1,0 +1,46 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    
+    def inorder(self, root, firstnode, secondnode, prev):
+        if(not root):
+            return 
+        # visit left subtree
+        self.inorder(root.left, firstnode, secondnode, prev);
+        # if prev is not None
+        if(prev[0]):
+            # check whether ther is any misplaced nodes by comparing current node and prev node
+            if(root.val < prev[0].val):
+                if(not firstnode[0]):
+                    firstnode[0] = prev[0];
+                secondnode[0] = root;
+                #print(firstnode[0].val)
+        # assign the current node to prev 
+        prev[0] = root;
+        # visit the right subtree
+        self.inorder(root.right, firstnode, secondnode, prev);
+    
+    
+    def recoverTree(self, root: TreeNode) -> None:
+        """
+        Do not return anything, modify root in-place instead.
+        """
+        # initialize two nodes to store the misplaced nodes
+        firstnode, secondnode = [None], [None];
+        # initialize prev node to store the previously visited node
+        prev = [None]
+        # invoke the inorder function to find the misplaced nodes
+        self.inorder(root, firstnode, secondnode, prev);
+        # swap the two nodes values to recover the bst
+        firstnode[0].val , secondnode[0].val = secondnode[0].val, firstnode[0].val;
+        
+        '''
+        time complexity = O(n)
+        space complexity = O(h)
+        '''
+        
+        
