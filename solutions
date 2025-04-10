@@ -1,0 +1,149 @@
+## Problem1
+class Solution {
+
+   public Node connect(Node root) {
+
+       Node level=root;
+
+       while(level!=null){
+
+           Node cur=level;
+
+           while(cur!=null){
+
+               if(cur.left!=null){
+
+                   cur.left.next=cur.right;
+
+               }
+
+               if(cur.right!=null&&cur.next!=null){
+
+                   cur.right.next=cur.next.left;
+
+               }
+
+               cur=cur.next;
+
+           }
+
+           level=level.left;
+
+       }
+
+       return root;
+
+   }
+
+}
+
+## Problem2
+class Solution {
+
+    TreeNode first; TreeNode last;
+
+    TreeNode prev; boolean flag;
+
+    public void recoverTree(TreeNode root) {
+
+        if(root == null) return;
+
+        inorder(root);
+
+        int temp = last.val;
+
+        last.val = first.val;
+
+        first.val = temp;
+
+       
+
+    }
+
+    private void inorder(TreeNode root){
+
+        if(root == null) return;
+
+        inorder(root.left);
+
+        //root = st.pop();
+
+        if(prev != null && root.val < prev.val){
+
+            if(!flag){
+
+                flag = true;
+
+                first = prev; last = root;
+
+            } else {
+
+                last = root;
+
+            }
+
+        }
+
+        prev = root;
+
+        inorder(root.right);
+
+    }
+
+}
+
+
+## Problem3
+class Solution {
+
+    public List<Integer> inorderTraversal(TreeNode root) {
+
+        List<Integer> result = new ArrayList<>();
+
+        TreeNode curr = root;
+
+        while(curr != null){
+
+            if(curr.left == null){
+
+                result.add(curr.val);
+
+                curr = curr.right;
+
+            } else {
+
+                TreeNode pre = curr.left;
+
+                while(pre.right != null && pre.right != curr){
+
+                    pre = pre.right;
+
+                }
+
+                if(pre.right == null){
+
+                    pre.right = curr;
+
+                    curr = curr.left;
+
+                } else {
+
+                   result.add(curr.val);
+
+                    curr = curr.right;
+
+                    pre.right = null;
+
+                }
+
+            }
+
+        }
+
+        return result;
+
+    }
+
+}
+
+
