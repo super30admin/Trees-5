@@ -1,0 +1,84 @@
+// Time Complexity :O(n)
+// Space Complexity : O(1) 
+// Did this code successfully run on Leetcode :yes
+// Any problem you faced while coding this :no
+
+
+// Your code here along with comments explaining your approach: DFS approach instead of using extra space just check with two pointers those are prev adnd current in our case curr(root) 
+class Solution {
+    List<TreeNode> li = new ArrayList<>();
+    TreeNode first; // first node address where mismatch occures
+    TreeNode second;// second node address where mismatch occures
+    TreeNode prev;//prev pointer
+
+    public void recoverTree(TreeNode root) {
+        helper(root);//recursion
+         //swapping the nodes where mismatch occures
+        int temp = first.val;
+        first.val = second.val;
+        second.val = temp;
+    }
+
+    public void helper(TreeNode root) {
+        if (root == null)//base case
+            return;
+        helper(root.left);//processing left node of root
+        if (prev != null && prev.val >= root.val) {
+            if (first == null) {
+                first = prev; //first occurance of swap
+                second = root;
+            } else {
+                second = root; //second occurance of swap
+            }
+        }
+        prev = root; //moving prev to current
+        helper(root.right);//processing right node of root
+    }
+
+}
+
+
+
+
+
+
+// Time Complexity :O(n)
+// Space Complexity : O(n) for stack
+// Did this code successfully run on Leetcode :yes
+// Any problem you faced while coding this :no
+
+
+// Your code here along with comments explaining your approach:same approach as above but here i used overwood stack to process nodes instead of recursive stack
+
+
+class Solution {
+    List<TreeNode> li = new ArrayList<>();
+    TreeNode first; // first node address where mismatch occures
+    TreeNode second;// second node address where mismatch occures
+    TreeNode prev; //prev pointer
+    public void recoverTree(TreeNode root) {
+        Stack<TreeNode> st=new Stack<>(); //stack to process nodes
+        while (!st.isEmpty() || root != null) { //base case
+            while (root != null) { //base case
+                st.push(root); //pushing int stack
+                root = root.left; //moving root to root.left
+            }
+            root = st.pop(); //popping last element
+            if (prev != null && prev.val > root.val) { //where child node is greater that its parent
+                if (first == null) {
+                    first = prev; //first occurance of swap
+                    second = root;
+                } else {
+                    second = root; //second occurance of swap
+                }
+            }
+            prev = root; //moving prev to current
+            root = root.right; //processing right node of root
+        }
+        //swapping the nodes where mismatch occures
+        int temp = first.val;
+        first.val = second.val;
+        second.val = temp;
+    }
+
+}

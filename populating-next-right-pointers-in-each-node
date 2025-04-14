@@ -1,0 +1,134 @@
+// Time Complexity :O(n)
+// Space Complexity : O(n) for queue
+// Did this code successfully run on Leetcode :yes
+// Any problem you faced while coding this :no
+
+
+// Your code here along with comments explaining your approach:BFS by using queue to make  level order traversal
+
+class Solution {
+    public Node connect(Node root) {
+        Queue<Node> pq = new LinkedList<>();
+        if (root == null) {
+            return null;
+        }
+        pq.add(root);
+        while (!pq.isEmpty()) {
+            int size = pq.size(); //to process level by level
+            for (int i = 0; i < size; i++) {
+                Node polled = pq.poll();
+                if (i != size - 1) { //for last node at level will not be having next
+                    polled.next = pq.peek(); //making connection between level nodes
+                }
+                  if (polled.left != null) {
+                    pq.add(polled.left); //processing level node by adding its left to queue
+                }
+                if (polled.right != null) {
+                    pq.add(polled.right); // processing level node by adding its right to queue
+                }
+
+            }
+        }
+        return root;
+    }
+}
+
+//Optimized BFS 
+
+// Time Complexity :O(n)
+// Space Complexity : O(1)
+// Did this code successfully run on Leetcode :yes
+// Any problem you faced while coding this :no
+
+
+// Your code here along with comments explaining your approach:BFS approach but not using any space but using two variable as level and current 
+
+
+
+class Solution {
+    public Node connect(Node root) {
+        Queue<Node> pq = new LinkedList<>();
+        if (root == null) {
+            return null;
+        }
+        Node level = root; //starting level at root
+        while (level.left != null) { // if level.left not null or level.right 1= null
+            Node curr = level; //starting current pointer at starting node at current level
+            while (curr != null) { //if curr not null
+                curr.left.next = curr.right; // adding connection between left and right of curr
+                if (curr.next != null) { // between curr right and curr.next.left expect last nodes
+                    curr.right.next = curr.next.left;
+                }
+                curr = curr.next; //moving current to next pointer
+            }
+            level = level.left; //moving to next level 
+        }
+
+        return root;
+    }
+}
+
+
+//dfs 
+// Time Complexity :O(n)
+// Space Complexity : O(1)
+// Did this code successfully run on Leetcode :yes
+// Any problem you faced while coding this :no
+
+class Solution {
+    public Node connect(Node root) {
+        if (root == null) {
+            return null;
+        }
+        dfs(root.left, root.right);//recursion from root left and right
+        return root;
+    }
+
+    public void dfs(Node left, Node right) {
+        if (left == null) //base case
+            return;
+            //action
+        left.next = right;
+        //recurse
+        dfs(left.left, left.right); //connection between root left and right
+        dfs(left.right, right.left); //connection between root right and root next element left
+        dfs(right.left, right.right); //connection between root next elemetn left and right
+    }
+}
+
+
+//dfs by standing at root
+// Time Complexity :O(n)
+// Space Complexity : O(1)
+// Did this code successfully run on Leetcode :yes
+// Any problem you faced while coding this :no
+
+
+
+class Solution {
+    public Node connect(Node root) {
+        if (root == null) {//null case
+            return null;
+        }
+        dfs(root); //recursion from root
+        return root;
+    }
+
+    public void dfs(Node root) {
+        if (root.left == null) //base case
+            return;
+            //action
+        root.left.next = root.right;
+        if (root.next != null) {
+            root.right.next = root.next.left;
+        }
+        //recurse
+        dfs(root.left);
+        dfs(root.right);
+
+    }
+}
+
+
+
+
