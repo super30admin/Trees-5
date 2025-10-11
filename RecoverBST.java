@@ -1,5 +1,8 @@
 import java.util.Stack;
 //TC: O(n), SC: O(n)
+//Approach: We need to traverse the BST inorder and check for the first breach where current.val <= prev.val, assign it to the first node
+//Similarly, there will occur another breach as the problem specifies, we assign it to the second node
+//swap the values of first and second nodes
 public class RecoverBST {
 
     public void recoverTree(TreeNode root) {

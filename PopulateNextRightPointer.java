@@ -1,4 +1,6 @@
 //TC: O(n), SC: O(1)
+//Approach: Traverse the tree level order but without a queue, think of a level as the level, current starts with the level until null
+//keep setting the next pointers using the current node and move to the next level when current == null -> level.left
 public class PopulateNextRightPointer {
 
     public Node connect(Node root) {
