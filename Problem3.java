@@ -18,6 +18,7 @@
 
  /*
 Iteratively while going down we find predecessor for the nodes and point predessesor to their ancesor and while going up we remove the links to the ancestor and process the node.
+Ran on leetcode: Yes
 TC: O(n) SC: O(1)
  */
 class Solution {
