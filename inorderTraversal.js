@@ -1,6 +1,7 @@
 /**
  * @param {TreeNode} root
  * @return {number[]}
+ * 94. Binary Tree Inorder Traversal
 Intuition:
 We recursively traverse the tree in inorder (left → root → right).
 For each node, we first visit its left subtree, then record it's value, and finally visit it's right subtree.
